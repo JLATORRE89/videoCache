@@ -1,0 +1,184 @@
+/* VideoManager.css */
+
+/* Root layout to ensure footer stays at bottom */
+.container.modern-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f4f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Ensure content area expands to push footer down */
+  .content-flex {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+  }
+  
+  /* Anchored footer styling */
+  .anchored-footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px 12px 0 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: auto;
+  }
+  
+  /* Header styling */
+  .header-modern {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+  }
+  
+  .header-modern h1 {
+    font-size: 2.5rem;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Input and button styles */
+  .input-container.modern-input {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    gap: 10px;
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .modern-button {
+    padding: 14px 30px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .modern-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Video cards and frames */
+  .video-card.modern-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .video-frame-container.modern-frame {
+    width: 100%;
+    padding-top: 56.25%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  
+  .responsive-iframe.modern-iframe,
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+  }
+  
+  /* Action buttons */
+  .action-buttons.modern-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .modern-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .delete-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  .edit-btn {
+    background-color: #2196f3;
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: #1976d2;
+  }
+  
+  /* Badge styling */
+  .external-badge.modern-badge {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #ffeb3b;
+    color: #333;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive design tweaks */
+  @media (max-width: 768px) {
+    .input-container.modern-input {
+      flex-direction: column;
+    }
+  
+    .content-flex {
+      grid-template-columns: 1fr;
+    }
+  
+    .header-modern h1 {
+      font-size: 2rem;
+    }
+  
+    .anchored-footer {
+      font-size: 0.8rem;
+    }
+  }
+  
+  /* Typography adjustments */
+  h3 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-top: 15px;
+  }
+  
+  p {
+    color: #555;
+    font-size: 1rem;
+  }
+  

@@ -1,8 +1,32 @@
 {
-    "scripts": {
-      "dev:server": "nodemon src/server/index.js",
-      "dev:client": "vite",
-      "build": "vite build",
-      "start": "node src/server/index.js"
-    }
+  "name": "video-metadata-extractor",
+  "version": "1.0.0",
+  "description": "SPA that extracts video metadata, generates thumbnails, and plays embedded videos.",
+  "type": "module",
+  "main": "src/server/index.js",
+"scripts": {
+  "dev:server": "nodemon src/server/index.js --port 5000",
+  "dev:client": "vite",
+  "build": "vite build",
+  "start": "vite",
+  "preview": "vite preview --host 0.0.0.0 --port 3001"
+},
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7",
+    "sqlite": "^4.2.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "vite": "^6.1.1",
+    "@vitejs/plugin-react": "^4.0.0",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "nodemon": "^3.0.2"
   }
+}

@@ -1,4 +1,4 @@
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3001/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export const fetchVideos = async () => {
   const response = await fetch(`${API_BASE}/videos`);
@@ -10,7 +10,7 @@ export const addVideo = async (url) => {
   const response = await fetch(`${API_BASE}/videos`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ url })
+    body: JSON.stringify({ url }),
   });
   if (!response.ok) throw new Error('Failed to add video');
   return response.json();
@@ -18,7 +18,7 @@ export const addVideo = async (url) => {
 
 export const deleteVideo = async (id) => {
   const response = await fetch(`${API_BASE}/videos/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
   });
   if (!response.ok) throw new Error('Failed to delete video');
 };
@@ -27,7 +27,7 @@ export const updateVideo = async (id, data) => {
   const response = await fetch(`${API_BASE}/videos/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
   if (!response.ok) throw new Error('Failed to update video');
   return response.json();

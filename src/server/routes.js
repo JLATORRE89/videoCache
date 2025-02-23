@@ -1,74 +1,30 @@
-import { getDb } from './database.js';
-import { extractVideoInfo } from './videoExtractor.js';
+import { getAllVideos, addVideo, deleteVideo } from './database.js';
 import { generateThumbnail } from './thumbnailGenerator.js';
+import { extractVideoInfo } from './videoExtractor.js';
 
-export const setupRoutes = (app) => {
+export function setupRoutes(app) {
   app.get('/api/videos', async (req, res) => {
     try {
-      const db = getDb();
-      const videos = await db.all('SELECT * FROM videos ORDER BY createdAt DESC');
+      const videos = await getAllVideos();
       res.json(videos);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch videos' });
+    } catch (err) {
+      console.error(`❌ Retrieve error: ${err.message}`);
+      res.status(500).json({ error: 'Failed to retrieve videos.' });
     }
   });
 
   app.post('/api/videos', async (req, res) => {
     try {
       const { url } = req.body;
-      const db = getDb();
-      
-      // Extract video metadata
-      const videoInfo = await extractVideoInfo(url);
-      
-      // Insert into database
-      const result = await db.run(
-        'INSERT INTO videos (url, title, description) VALUES (?, ?, ?)',
-        [url, videoInfo.title, videoInfo.description]
-      );
-      
-      // Generate thumbnail
-      const thumbnailPath = await generateThumbnail(url, result.lastID);
-      
-      // Update thumbnail path
-      await db.run(
-        'UPDATE videos SET thumbnailPath = ? WHERE id = ?',
-        [thumbnailPath, result.lastID]
-      );
-      
-      const video = await db.get('SELECT * FROM videos WHERE id = ?', result.lastID);
-      res.status(201).json(video);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to add video' });
-    }
-  });
+      if (!url) return res.status(400).json({ error: 'URL is required.' });
 
-  app.put('/api/videos/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { title, description } = req.body;
-      const db = getDb();
-      
-      await db.run(
-        'UPDATE videos SET title = ?, description = ? WHERE id = ?',
-        [title, description, id]
-      );
-      
-      const video = await db.get('SELECT * FROM videos WHERE id = ?', id);
+      const { title, description, duration, filePath, isEmbedded } = await extractVideoInfo(url);
+      const thumbnail = isEmbedded ? '' : await generateThumbnail(filePath, Date.now());
+      const video = await addVideo(url, title, description, thumbnail, duration, isEmbedded);
       res.json(video);
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to update video' });
+    } catch (err) {
+      console.error(`❌ Add video error: ${err.message}`);
+      res.status(500).json({ error: 'Failed to add video.' });
     }
   });
-
-  app.delete('/api/videos/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const db = getDb();
-      await db.run('DELETE FROM videos WHERE id = ?', id);
-      res.status(204).send();
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to delete video' });
-    }
-  });
-};
+}
